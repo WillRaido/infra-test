@@ -199,7 +199,7 @@ jobs:
 ---
 
 ## **Cluster EKS AWS**
-![Kubectl](Media/Kubectlgetall.png)
+![Kubectl](Media/AWSCluster.png)
 
 ## **Dockert Images**
 ![Kubectl](Media/DokcerImages.png)
