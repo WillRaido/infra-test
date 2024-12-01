@@ -15,3 +15,11 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = data.aws_eks_cluster.cluster.name
 }
+
+resource "kubernetes_manifest" "app1" {
+  manifest = yamldecode(file("${path.module}/kubernetes/app1-deployment.yaml"))
+}
+
+resource "kubernetes_manifest" "app2" {
+  manifest = yamldecode(file("${path.module}/kubernetes/app2-deployment.yaml"))
+}

@@ -1,0 +1,33 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+
+# Kubernetes manifests (optional: only if generated dynamically)
+*.yaml~
+
+# Logs
+*.log
+*.out
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.bak
+*.tmp
+*.old
+
+# IDE-specific files (e.g., VSCode)
+.vscode/
+.idea/
+*.iml
+
+# Terraform plan output
+*.tfplan
