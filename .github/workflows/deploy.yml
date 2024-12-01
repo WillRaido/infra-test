@@ -34,7 +34,13 @@ jobs:
 
       # 5. Planificar los cambios
       - name: Terraform Plan
-        run: terraform plan
+      id: plan
+      run: |
+        terraform plan -no-color > plan_output.txt
+        if grep -q "No changes. Infrastructure is up-to-date." plan_output.txt; then
+          echo "No changes detected in the plan. Exiting gracefully."
+          exit 0
+        fi
 
       # 6. Aplicar los cambios
       - name: Terraform Apply
