@@ -29,10 +29,23 @@ jobs:
           terraform_version: 1.5.6
 
       # 4. Inicializar Terraform
-      - name: Initialize Terraform
+      - name: Terraform Init
         run: terraform init
 
-      # 5. Planificar los cambios
+      # 5. Detectar y Importar Recursos Existentes
+      - name: Detect Existing Resources
+        run: |
+          # Detect if resources exist and import them into Terraform state
+          for resource in "deployment/app1" "service/app1-service" "deployment/app2" "service/app2-service"; do
+            if kubectl get $resource -n default; then
+              echo "Resource $resource exists, importing to Terraform..."
+              terraform import kubernetes_manifest.${resource//\//_} default/$(basename $resource)
+            else
+              echo "Resource $resource does not exist, skipping import."
+            fi
+          done
+
+      # 6. Planificar los cambios
       - name: Terraform Plan
         id: plan
         run: |
@@ -45,7 +58,7 @@ jobs:
             echo "no_changes=false" >> $GITHUB_ENV
           fi
 
-      # 6. Aplicar los cambios
+      # 7. Aplicar los cambios
       - name: Terraform Apply
         if: env.no_changes != 'true'
         run: terraform apply -auto-approve
